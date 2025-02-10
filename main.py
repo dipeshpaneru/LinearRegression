@@ -18,3 +18,4 @@ def getDataFromCsv(file_path, column1_index, column2_index):
 data = getDataFromCsv("Cancer_dataset.csv", 4, 33)
 data.pop(0)
 
+
