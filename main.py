@@ -98,12 +98,14 @@ class LinearRegression:
         for i in range(self.maxNoOfIterations):
 
             predictedOutputs = self.computePredictedOutput(self.thetas)
-            
-            newB0 = self.calculateGradientDescent(self.thetas[0], predictedOutputs, True)
-            newB1 = self.calculateGradientDescent(self.thetas[1], predictedOutputs, False)
 
-            self.thetas[0] = newB0
-            self.thetas[1] = newB1
+            for idx, b in enumerate(self.thetas):
+                if idx == 0:
+                    newB = self.calculateGradientDescent(b, predictedOutputs, True)
+                else:
+                    newB = self.calculateGradientDescent(b, predictedOutputs, False)
+
+                self.thetas[idx] = newB
         
         self.printResults()
 
