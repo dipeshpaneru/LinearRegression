@@ -52,9 +52,11 @@ class LinearRegression:
 
         for x in self.getFeatures2D():
             y = thetas[0]
+
             for idx, i in enumerate(x):
                 y += (float(thetas[idx + 1]) * float(i))
-                predictedOutputs.append(y)
+            
+            predictedOutputs.append(y)
 
         return predictedOutputs
     
@@ -156,18 +158,22 @@ def cleanUpData(data):
     return tempArray
 
 
+
+
+
+# Actually passing data to the regression model
+
+print("Question 1")
 tempData1 = getDataFromCsv("Cancer_dataset.csv", [4], 33)
 data1 = cleanUpData(tempData1)
 
-tempData2 = getDataFromCsv("Cancer_dataset.csv", [4, 34], 33)
-data2 = cleanUpData(tempData2)
-
-# Actually passing data to the regression model
-print("Question 1")
 regressionModel = LinearRegression(data1, 1000, [0, 0], 0.001)
 regressionModel.performLinearRegression()
 
 print("----------------")
 print("Question 2")
+tempData2 = getDataFromCsv("Cancer_dataset.csv", [4, 34], 33)
+data2 = cleanUpData(tempData2)
+
 regressionModel = LinearRegression(data2, 1000, [0, 0, 0], 0.001)
 regressionModel.performLinearRegression()
