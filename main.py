@@ -16,16 +16,16 @@ class LinearRegression:
         self.B1 = B1
         self.lr = lr
 
-    def divideData(self):
-        dataLen = len((self.DATA))
-        trainingCount = int((dataLen / 0.8))
+    # def divideData(self):
+    #     dataLen = len((self.DATA))
+    #     trainingCount = int((dataLen / 0.8))
 
-        randomData = random.choice(self.DATA)
-        randomTrainingData = random.sample(randomData, trainingCount)
-        testData = randomData - randomTrainingData
+    #     randomData = random.choice(self.DATA)
+    #     randomTrainingData = random.sample(randomData, trainingCount)
+    #     testData = randomData - randomTrainingData
 
-        self.trainingData = randomTrainingData
-        self.testData = testData
+    #     self.trainingData = randomTrainingData
+    #     self.testData = testData
         
         
     def getFeatures(self):
@@ -88,9 +88,8 @@ class LinearRegression:
         self.iterationCount = self.iterationCount + 1
 
         predictedOutputs = self.computePredictedOutput(B0, B1)
-        outputs = self.getOutputs()
         
-        cost = self.calculateCost(predictedOutputs)
+        # cost = self.calculateCost(predictedOutputs)
         
         newB0 = self.calculateGradientDescent(B0, predictedOutputs, True)
         newB1 = self.calculateGradientDescent(B1, predictedOutputs, False)
@@ -124,10 +123,11 @@ def getDataFromCsv(file_path, column1_index, column2_index):
 
 def cleanUpData(data):
     data.pop(0)
+    tempData = data
 
-    for x in data:
+    for idx, x in enumerate(tempData):
         if x[0] == "":
-            data.remove(x)
+            data.pop(idx)
             
     return data
 
@@ -136,7 +136,7 @@ tempData = getDataFromCsv("Cancer_dataset.csv", 4, 33)
 data = cleanUpData(tempData)
 
 # Actually passing data to the regression model
-regressionModel = LinearRegression(data, 100, 0.2, 0.2, 0.01)
+regressionModel = LinearRegression(data, 100, 0, 0, 0.01)
 regressionModel.performLinearRegression()
 
 
