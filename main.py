@@ -71,7 +71,7 @@ class LinearRegression:
         return cost
     
 
-    def calculateGradientDescent(self, B, predictedOutputs, isIntercept):
+    def calculateGradientDescent(self, B, index,  predictedOutputs, isIntercept):
         features = self.getFeatures2D()
         outputs = self.getOutputs()
 
@@ -84,7 +84,7 @@ class LinearRegression:
             if isIntercept:
                 result = (predictedOutputs[idx] - outputs[idx])
             else:
-                result = (predictedOutputs[idx] - outputs[idx]) * float(x[0])
+                result = (predictedOutputs[idx] - outputs[idx]) * float(x[index])
 
             total += result
         
@@ -101,9 +101,9 @@ class LinearRegression:
 
             for idx, b in enumerate(self.thetas):
                 if idx == 0:
-                    newB = self.calculateGradientDescent(b, predictedOutputs, True)
+                    newB = self.calculateGradientDescent(b, (idx - 1), predictedOutputs, True)
                 else:
-                    newB = self.calculateGradientDescent(b, predictedOutputs, False)
+                    newB = self.calculateGradientDescent(b, (idx - 1), predictedOutputs, False)
 
                 self.thetas[idx] = newB
         
