@@ -143,8 +143,9 @@ def cleanUpData(data):
     tempData = data
 
     for idx, x in enumerate(tempData):
-        if x[0][0] == "":
-            data.pop(idx)
+        for i in x[0]:
+            if i == "":
+                data.pop(idx)
             
     return data
 
