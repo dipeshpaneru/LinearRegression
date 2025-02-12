@@ -120,7 +120,7 @@ class LinearRegression:
 
 # Getting and cleaning up data before passing it through the regression model
 
-def getDataFromCsv(file_path, column1_index, column2_index):
+def getDataFromCsv(file_path, parameters_indexes, output_index):
     
     data = []
     with open(file_path, 'r') as file:
@@ -128,7 +128,12 @@ def getDataFromCsv(file_path, column1_index, column2_index):
         reader = csv.reader(file)
         for row in reader:
             try:
-                data.append(([row[column1_index]], row[column2_index]))
+                parameters = []
+
+                for x in parameters_indexes:
+                    parameters.append(row[x])
+
+                data.append((parameters, row[output_index]))
             except:
                 print(f"ERROR: Error while accessing data from CSV file")
     return data
@@ -144,11 +149,18 @@ def cleanUpData(data):
     return data
 
 
-tempData = getDataFromCsv("Cancer_dataset.csv", 4, 33)
-data = cleanUpData(tempData)
+tempData1 = getDataFromCsv("Cancer_dataset.csv", [4], 33)
+data1 = cleanUpData(tempData1)
+
+# tempData2 = getDataFromCsv("Cancer_dataset.csv", [4 ,34], 33)
+# data2 = cleanUpData(tempData2)
 
 # Actually passing data to the regression model
-regressionModel = LinearRegression(data, 1000, [0, 0], 0.001)
+print("Question 1")
+regressionModel = LinearRegression(data1, 1000, [0, 0], 0.001)
 regressionModel.performLinearRegression()
 
-
+# print("----------------")
+# print("Question 2")
+# regressionModel = LinearRegression(data2, 1000, [0, 0, 0], 0.001)
+# regressionModel.performLinearRegression()
