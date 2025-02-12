@@ -4,16 +4,13 @@ import random
 # Linear regression model Class with all the components required for linear regression
 class LinearRegression:
     
-    th0 = 0
-    th1 = 0
     trainingData = None
     testData = None
 
-    def __init__(self, DATA, maxNoOfIterations, B0, B1, lr):
+    def __init__(self, DATA, maxNoOfIterations, thetas, lr):
         self.DATA = DATA
         self.maxNoOfIterations = maxNoOfIterations
-        self.B0 = B0
-        self.B1 = B1
+        self.thetas = thetas
         self.lr = lr
 
         self.divideData()
@@ -26,15 +23,19 @@ class LinearRegression:
         random.shuffle(data)
 
         randomTrainingData = random.sample(data, trainingCount)
-        testData = list(set(data) - set(randomTrainingData))
+
+        for x in randomTrainingData:
+            data.remove(x)
+
+        testData = data
 
         self.trainingData = randomTrainingData
         self.testData = testData
         
         
-    def getFeatures(self):
+    def getFeatures2D(self):
         if self.trainingData != None:
-            features = [float(x[0]) for x in self.trainingData]
+            features = [x[0] for x in self.trainingData]
             return features
 
     def getOutputs(self):
@@ -45,31 +46,32 @@ class LinearRegression:
     def performLinearRegression(self):
         self.iterate()
 
-    def computePredictedOutput(self, B0, B1):
+    def computePredictedOutput(self, thetas):
         predictedOutputs = []
 
-        for x in self.getFeatures():
-            y = B0 + (B1 * x)
-            predictedOutputs.append(y)
+        for x in self.getFeatures2D():
+            for idx, i in enumerate(x):
+                y = thetas[0] + (thetas[1] * float(x[0]))
+                predictedOutputs.append(y)
 
         return predictedOutputs
     
-    def calculateCost(self, predictedOutputs):
-        outputs = self.getOutputs()
-        featureLen = len(self.getFeatures())
+    # def calculateCost(self, predictedOutputs):
+    #     outputs = self.getOutputs()
+    #     featureLen = len(self.getFeatures())
 
-        total = 0
+    #     total = 0
 
-        for idx, x in enumerate(predictedOutputs):
-            result = (x - outputs[idx]) ** 2
-            total += result
+    #     for idx, x in enumerate(predictedOutputs):
+    #         result = (x - outputs[idx]) ** 2
+    #         total += result
 
-        cost = total / float((2 * featureLen))
-        return cost
+    #     cost = total / float((2 * featureLen))
+    #     return cost
     
 
     def calculateGradientDescent(self, B, predictedOutputs, isIntercept):
-        features = self.getFeatures()
+        features = self.getFeatures2D()
         outputs = self.getOutputs()
 
         featureLen = float(len(features))
@@ -81,7 +83,7 @@ class LinearRegression:
             if isIntercept:
                 result = (predictedOutputs[idx] - outputs[idx])
             else:
-                result = (predictedOutputs[idx] - outputs[idx]) * x
+                result = (predictedOutputs[idx] - outputs[idx]) * float(x[0])
 
             total += result
         
@@ -94,23 +96,22 @@ class LinearRegression:
 
         for i in range(self.maxNoOfIterations):
 
-            predictedOutputs = self.computePredictedOutput(self.th0, self.th1)
+            predictedOutputs = self.computePredictedOutput(self.thetas)
             
-            newB0 = self.calculateGradientDescent(self.th0, predictedOutputs, True)
-            newB1 = self.calculateGradientDescent(self.th1, predictedOutputs, False)
+            newB0 = self.calculateGradientDescent(self.thetas[0], predictedOutputs, True)
+            newB1 = self.calculateGradientDescent(self.thetas[1], predictedOutputs, False)
 
-            self.th0 = newB0
-            self.th1 = newB1
+            self.thetas[0] = newB0
+            self.thetas[1] = newB1
         
         self.printResults()
 
     
     def printResults(self):
-        print(self.th0)
-        print(self.th1)
-        predictedOutputs = self.computePredictedOutput(self.th0, self.th1)
-        cost = self.calculateCost(predictedOutputs)
-        print(cost)
+        print(self.thetas)
+        # predictedOutputs = self.computePredictedOutput(self.th0, self.th1)
+        # cost = self.calculateCost(predictedOutputs)
+        # print(cost)
 
 
 
@@ -124,7 +125,7 @@ def getDataFromCsv(file_path, column1_index, column2_index):
         reader = csv.reader(file)
         for row in reader:
             try:
-                data.append((row[column1_index], row[column2_index]))
+                data.append(([row[column1_index]], row[column2_index]))
             except:
                 print(f"ERROR: Error while accessing data from CSV file")
     return data
@@ -134,7 +135,7 @@ def cleanUpData(data):
     tempData = data
 
     for idx, x in enumerate(tempData):
-        if x[0] == "":
+        if x[0][0] == "":
             data.pop(idx)
             
     return data
@@ -144,7 +145,7 @@ tempData = getDataFromCsv("Cancer_dataset.csv", 4, 33)
 data = cleanUpData(tempData)
 
 # Actually passing data to the regression model
-regressionModel = LinearRegression(data, 100, 0, 0, 0.001)
+regressionModel = LinearRegression(data, 100, [0, 0], 0.001)
 regressionModel.performLinearRegression()
 
 
