@@ -50,8 +50,9 @@ class LinearRegression:
         predictedOutputs = []
 
         for x in self.getFeatures2D():
+            y = thetas[0]
             for idx, i in enumerate(x):
-                y = thetas[0] + (thetas[1] * float(x[0]))
+                y += (float(thetas[idx]) * float(i))
                 predictedOutputs.append(y)
 
         return predictedOutputs
