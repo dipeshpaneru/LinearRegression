@@ -1,5 +1,6 @@
 import csv
 import random
+import copy
 
 # Linear regression model Class with all the components required for linear regression
 class LinearRegression:
@@ -52,7 +53,7 @@ class LinearRegression:
         for x in self.getFeatures2D():
             y = thetas[0]
             for idx, i in enumerate(x):
-                y += (float(thetas[idx]) * float(i))
+                y += (float(thetas[idx + 1]) * float(i))
                 predictedOutputs.append(y)
 
         return predictedOutputs
@@ -140,28 +141,33 @@ def getDataFromCsv(file_path, parameters_indexes, output_index):
 
 def cleanUpData(data):
     data.pop(0)
-    tempData = data
+    tempArray = []
 
-    for idx, x in enumerate(tempData):
+    for idx, x in enumerate(data):
+        hasEmpty = False
+
         for i in x[0]:
             if i == "":
-                data.pop(idx)
-            
-    return data
+                hasEmpty = True
+        
+        if not hasEmpty:
+            tempArray.append(data[idx])
+ 
+    return tempArray
 
 
 tempData1 = getDataFromCsv("Cancer_dataset.csv", [4], 33)
 data1 = cleanUpData(tempData1)
 
-# tempData2 = getDataFromCsv("Cancer_dataset.csv", [4 ,34], 33)
-# data2 = cleanUpData(tempData2)
+tempData2 = getDataFromCsv("Cancer_dataset.csv", [4, 34], 33)
+data2 = cleanUpData(tempData2)
 
 # Actually passing data to the regression model
 print("Question 1")
 regressionModel = LinearRegression(data1, 1000, [0, 0], 0.001)
 regressionModel.performLinearRegression()
 
-# print("----------------")
-# print("Question 2")
-# regressionModel = LinearRegression(data2, 1000, [0, 0, 0], 0.001)
-# regressionModel.performLinearRegression()
+print("----------------")
+print("Question 2")
+regressionModel = LinearRegression(data2, 1000, [0, 0, 0], 0.001)
+regressionModel.performLinearRegression()
