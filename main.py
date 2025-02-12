@@ -3,9 +3,9 @@ import random
 
 # Linear regression model Class with all the components required for linear regression
 class LinearRegression:
-    iterationCount = 0
-    learnedB0 = 0
-    learnedB1 = 0
+    
+    th0 = 0
+    th1 = 0
     trainingData = None
     testData = None
 
@@ -16,28 +16,34 @@ class LinearRegression:
         self.B1 = B1
         self.lr = lr
 
-    # def divideData(self):
-    #     dataLen = len((self.DATA))
-    #     trainingCount = int((dataLen / 0.8))
+        self.divideData()
 
-    #     randomData = random.choice(self.DATA)
-    #     randomTrainingData = random.sample(randomData, trainingCount)
-    #     testData = randomData - randomTrainingData
+    def divideData(self):
+        dataLen = len((self.DATA))
+        trainingCount = int((dataLen * 0.8))
 
-    #     self.trainingData = randomTrainingData
-    #     self.testData = testData
+        data = self.DATA
+        random.shuffle(data)
+
+        randomTrainingData = random.sample(data, trainingCount)
+        testData = list(set(data) - set(randomTrainingData))
+
+        self.trainingData = randomTrainingData
+        self.testData = testData
         
         
     def getFeatures(self):
-        features = [float(x[0]) for x in self.DATA]
-        return features
+        if self.trainingData != None:
+            features = [float(x[0]) for x in self.trainingData]
+            return features
 
     def getOutputs(self):
-        output = [float(x[1]) for x in self.DATA]
-        return output
+        if self.trainingData != None:
+            output = [float(x[1]) for x in self.trainingData]
+            return output
 
     def performLinearRegression(self):
-        self.iterate(self.B0, self.B1)
+        self.iterate()
 
     def computePredictedOutput(self, B0, B1):
         predictedOutputs = []
@@ -84,27 +90,29 @@ class LinearRegression:
         newB = B - change
         return newB
     
-    def iterate(self, B0, B1):
-        self.iterationCount = self.iterationCount + 1
+    def iterate(self):
 
-        predictedOutputs = self.computePredictedOutput(B0, B1)
-        
-        # cost = self.calculateCost(predictedOutputs)
-        
-        newB0 = self.calculateGradientDescent(B0, predictedOutputs, True)
-        newB1 = self.calculateGradientDescent(B1, predictedOutputs, False)
+        for i in range(self.maxNoOfIterations):
 
-        if self.iterationCount < self.maxNoOfIterations:
-            self.iterate(newB0, newB1)
-        else:
-            self.learnedB0 = newB0
-            self.learnedB1 = newB1
-            self.printLearnedWeights()
+            predictedOutputs = self.computePredictedOutput(self.th0, self.th1)
+            
+            newB0 = self.calculateGradientDescent(self.th0, predictedOutputs, True)
+            newB1 = self.calculateGradientDescent(self.th1, predictedOutputs, False)
+
+            self.th0 = newB0
+            self.th1 = newB1
+        
+        self.printResults()
 
     
-    def printLearnedWeights(self):
-        print(self.learnedB0)
-        print(self.learnedB1)
+    def printResults(self):
+        print(self.th0)
+        print(self.th1)
+        predictedOutputs = self.computePredictedOutput(self.th0, self.th1)
+        cost = self.calculateCost(predictedOutputs)
+        print(cost)
+
+
 
 # Getting and cleaning up data before passing it through the regression model
 
@@ -136,7 +144,7 @@ tempData = getDataFromCsv("Cancer_dataset.csv", 4, 33)
 data = cleanUpData(tempData)
 
 # Actually passing data to the regression model
-regressionModel = LinearRegression(data, 100, 0, 0, 0.01)
+regressionModel = LinearRegression(data, 100, 0, 0, 0.001)
 regressionModel.performLinearRegression()
 
 
