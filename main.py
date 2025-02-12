@@ -56,18 +56,18 @@ class LinearRegression:
 
         return predictedOutputs
     
-    # def calculateCost(self, predictedOutputs):
-    #     outputs = self.getOutputs()
-    #     featureLen = len(self.getFeatures())
+    def calculateCost(self, predictedOutputs):
+        outputs = self.getOutputs()
+        featureLen = len(self.getFeatures2D())
 
-    #     total = 0
+        total = 0
 
-    #     for idx, x in enumerate(predictedOutputs):
-    #         result = (x - outputs[idx]) ** 2
-    #         total += result
+        for idx, x in enumerate(predictedOutputs):
+            result = (x - outputs[idx]) ** 2
+            total += result
 
-    #     cost = total / float((2 * featureLen))
-    #     return cost
+        cost = total / float((2 * featureLen))
+        return cost
     
 
     def calculateGradientDescent(self, B, predictedOutputs, isIntercept):
@@ -109,9 +109,9 @@ class LinearRegression:
     
     def printResults(self):
         print(self.thetas)
-        # predictedOutputs = self.computePredictedOutput(self.th0, self.th1)
-        # cost = self.calculateCost(predictedOutputs)
-        # print(cost)
+        predictedOutputs = self.computePredictedOutput(self.thetas)
+        cost = self.calculateCost(predictedOutputs)
+        print(cost)
 
 
 
@@ -145,7 +145,7 @@ tempData = getDataFromCsv("Cancer_dataset.csv", 4, 33)
 data = cleanUpData(tempData)
 
 # Actually passing data to the regression model
-regressionModel = LinearRegression(data, 100, [0, 0], 0.001)
+regressionModel = LinearRegression(data, 1000, [0, 0], 0.001)
 regressionModel.performLinearRegression()
 
 
