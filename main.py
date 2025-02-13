@@ -13,25 +13,6 @@ class LinearRegression:
         self.maxNoOfIterations = maxNoOfIterations
         self.thetas = thetas
         self.lr = lr
-
-        self.divideData()
-
-    def divideData(self):
-        dataLen = len((self.DATA))
-        trainingCount = int((dataLen * 0.8))
-
-        data = self.DATA
-        random.shuffle(data)
-
-        randomTrainingData = random.sample(data, trainingCount)
-
-        for x in randomTrainingData:
-            data.remove(x)
-
-        testData = data
-
-        self.trainingData = randomTrainingData
-        self.testData = testData
         
         
     def getFeatures2D(self, data):
@@ -135,7 +116,7 @@ class LinearRegression:
 
 # Getting and cleaning up data before passing it through the regression model
 
-def getDataFromCsv(file_path, parameters_indexes, output_index):
+def getDataFromCsv(file_path):
     
     data = []
     with open(file_path, 'r') as file:
@@ -145,10 +126,12 @@ def getDataFromCsv(file_path, parameters_indexes, output_index):
             try:
                 parameters = []
 
-                for x in parameters_indexes:
+                for x in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+                               12, 13, 14, 15, 16, 17, 18, 19, 20,
+                               21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34]:
                     parameters.append(row[x])
 
-                data.append((parameters, row[output_index]))
+                data.append((parameters, row[33]))
             except:
                 print(f"ERROR: Error while accessing data from CSV file")
     return data
@@ -169,23 +152,104 @@ def cleanUpData(data):
  
     return tempArray
 
+def divideData(data):
+    dataLen = len((data))
+    trainingCount = int((dataLen * 0.8))
+
+    random.shuffle(data)
+
+    randomTrainingData = random.sample(data, trainingCount)
+
+    for x in randomTrainingData:
+        data.remove(x)
+
+    testData = data
+
+    return randomTrainingData, testData
+
 
 
 
 
 # Actually passing data to the regression model
 
-print("Question 1")
-tempData1 = getDataFromCsv("Cancer_dataset.csv", [4], 33)
-data1 = cleanUpData(tempData1)
+print("\n---------------- Question 1 -------------")
 
-regressionModel = LinearRegression(data1, 1000, [0, 0], 0.001)
-regressionModel.performLinearRegression()
+tempData = getDataFromCsv("Cancer_dataset.csv")
+print(len(tempData))
+data = cleanUpData(tempData)
+print(len(data))
+trainingData, testData = divideData(data)
 
-print("----------------")
-print("Question 2")
-tempData2 = getDataFromCsv("Cancer_dataset.csv", [4, 34], 33)
-data2 = cleanUpData(tempData2)
+print(len(trainingData), len(testData))
 
-regressionModel = LinearRegression(data2, 1000, [0, 0, 0], 0.001)
-regressionModel.performLinearRegression()
+# lr1 = LinearRegression(data1, 1000, [0, 0], 0.001)
+# lr1.divideData()
+# lr1.performLinearRegression()
+
+# print("\n---------------- Question 2 -------------")
+
+# tempData2 = getDataFromCsv("Cancer_dataset.csv")
+# data2 = cleanUpData(tempData2)
+
+
+
+
+
+
+
+
+
+# lr2 = LinearRegression(data2, 1000, [0, 0, 0], 0.001)
+# lr2.divideData()
+# lr2.performLinearRegression()
+
+
+# print("\n---------------- Question 3 -------------")
+# print("Step 1")
+# # I have chosen lymph_node_status first because in question 2
+# # adding lymph_node_status to the model seemed to better the model performance
+
+# tempData3 = getDataFromCsv("Cancer_dataset.csv", [34], 33)
+# data3 = cleanUpData(tempData3)
+
+# lr3 = LinearRegression(data3, 1000, [0, 0], 0.001)
+# lr3.divideData()
+# lr3.performLinearRegression()
+
+# print("Step 2")
+# # I have chosen mean_radius in the for second step,
+# # because radius should impact the size 
+
+# tempData3 = getDataFromCsv("Cancer_dataset.csv", [3, 34], 33)
+# data3 = cleanUpData(tempData3)
+
+# regressionModel = LinearRegression(data3, 1000, [0, 0, 0], 0.001)
+# regressionModel.performLinearRegression()
+
+# print("Step 3")
+#  # In third step I am adding mean_smoothness because mean_radius, 
+#  # mean_parameter and mean_area seems to have some colinearity, thus I am choosing 
+#  # something that is not these two
+
+# tempData3 = getDataFromCsv("Cancer_dataset.csv", [7, 3, 34], 33)
+# data3 = cleanUpData(tempData3)
+
+# regressionModel = LinearRegression(data3, 1000, [0, 0, 0, 0], 0.001)
+# regressionModel.performLinearRegression()
+
+# print("Step 4")
+
+# tempData3 = getDataFromCsv("Cancer_dataset.csv", [7, 3, 10, 34], 33)
+# data3 = cleanUpData(tempData3)
+
+# regressionModel = LinearRegression(data3, 1000, [0, 0, 0, 0, 0], 0.001)
+# regressionModel.performLinearRegression()
+
+# # print("Step 5")
+
+# tempData3 = getDataFromCsv("Cancer_dataset.csv", [7, 3, 10, 11, 34], 33)
+# data3 = cleanUpData(tempData3)
+
+# regressionModel = LinearRegression(data3, 1000, [0, 0, 0, 0 ,0, 0], 0.001)
+# regressionModel.performLinearRegression()
