@@ -34,23 +34,23 @@ class LinearRegression:
         self.testData = testData
         
         
-    def getFeatures2D(self):
-        if self.trainingData != None:
-            features = [x[0] for x in self.trainingData]
+    def getFeatures2D(self, data):
+        if data != None:
+            features = [x[0] for x in data]
             return features
 
-    def getOutputs(self):
-        if self.trainingData != None:
-            output = [float(x[1]) for x in self.trainingData]
+    def getOutputs(self, data):
+        if data != None:
+            output = [float(x[1]) for x in data]
             return output
 
     def performLinearRegression(self):
         self.iterate()
 
-    def computePredictedOutput(self, thetas):
+    def computePredictedOutput(self, thetas, data):
         predictedOutputs = []
 
-        for x in self.getFeatures2D():
+        for x in self.getFeatures2D(data):
             y = thetas[0]
 
             for idx, i in enumerate(x):
@@ -60,9 +60,9 @@ class LinearRegression:
 
         return predictedOutputs
     
-    def calculateCost(self, predictedOutputs):
-        outputs = self.getOutputs()
-        featureLen = len(self.getFeatures2D())
+    def calculateCost(self, predictedOutputs, data):
+        outputs = self.getOutputs(data)
+        featureLen = len(self.getFeatures2D(data))
 
         total = 0
 
@@ -75,8 +75,8 @@ class LinearRegression:
     
 
     def calculateGradientDescent(self, B, index,  predictedOutputs, isIntercept):
-        features = self.getFeatures2D()
-        outputs = self.getOutputs()
+        features = self.getFeatures2D(self.trainingData)
+        outputs = self.getOutputs(self.trainingData)
 
         featureLen = float(len(features))
         
@@ -100,7 +100,7 @@ class LinearRegression:
 
         for i in range(self.maxNoOfIterations):
 
-            predictedOutputs = self.computePredictedOutput(self.thetas)
+            predictedOutputs = self.computePredictedOutput(self.thetas, self.trainingData)
 
             for idx, b in enumerate(self.thetas):
                 if idx == 0:
@@ -114,9 +114,21 @@ class LinearRegression:
 
     
     def printResults(self):
+        print("The values of the Thetas are")
         print(self.thetas)
-        predictedOutputs = self.computePredictedOutput(self.thetas)
-        cost = self.calculateCost(predictedOutputs)
+
+        print("Cost of the Training data set is")
+        predictedOutputs = self.computePredictedOutput(self.thetas, self.trainingData)
+        cost = self.calculateCost(predictedOutputs, self.trainingData)
+        print(cost)
+
+        self.calculateMeanSqErr()
+
+
+    def calculateMeanSqErr(self):
+        print("Cost of the Test data set is")
+        predictedOutputs = self.computePredictedOutput(self.thetas, self.testData)
+        cost = self.calculateCost(predictedOutputs, self.testData)
         print(cost)
 
 
