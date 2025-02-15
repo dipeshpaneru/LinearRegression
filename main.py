@@ -1,6 +1,5 @@
 import csv
 import random
-import copy
 
 # Linear regression model Class with all the components required for linear regression
 class LinearRegression:
@@ -8,8 +7,9 @@ class LinearRegression:
     trainingData = None
     testData = None
 
-    def __init__(self, DATA, maxNoOfIterations, thetas, lr):
-        self.DATA = DATA
+    def __init__(self, trainingData, testData, maxNoOfIterations, thetas, lr):
+        self.trainingData = trainingData
+        self.testData = testData
         self.maxNoOfIterations = maxNoOfIterations
         self.thetas = thetas
         self.lr = lr
@@ -116,93 +116,99 @@ class LinearRegression:
 
 # Getting and cleaning up data before passing it through the regression model
 
-def getDataFromCsv(file_path):
+class DataExtraction:
+    def getDataFromCsv(self, file_path):
+        
+        data = []
+        with open(file_path, 'r') as file:
+            
+            reader = csv.reader(file)
+            for row in reader:
+                try:
+                    parameters = []
+
+                    for x in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+                                12, 13, 14, 15, 16, 17, 18, 19, 20,
+                                21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34]:
+                        parameters.append(row[x])
+
+                    data.append((parameters, row[33]))
+                except:
+                    print(f"ERROR: Error while accessing data from CSV file")
+        return data
+
+    def cleanUpData(self, data):
+        data.pop(0)
+        tempArray = []
+
+        for idx, x in enumerate(data):
+            hasEmpty = False
+
+            for i in x[0]:
+                if i == "":
+                    hasEmpty = True
+            
+            if not hasEmpty:
+                tempArray.append(data[idx])
     
-    data = []
-    with open(file_path, 'r') as file:
-        
-        reader = csv.reader(file)
-        for row in reader:
-            try:
-                parameters = []
+        return tempArray
 
-                for x in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-                               12, 13, 14, 15, 16, 17, 18, 19, 20,
-                               21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34]:
-                    parameters.append(row[x])
+    def divideData(self, data):
+        dataLen = len((data))
+        trainingCount = int((dataLen * 0.8))
 
-                data.append((parameters, row[33]))
-            except:
-                print(f"ERROR: Error while accessing data from CSV file")
-    return data
+        random.shuffle(data)
 
-def cleanUpData(data):
-    data.pop(0)
-    tempArray = []
+        randomTrainingData = random.sample(data, trainingCount)
 
-    for idx, x in enumerate(data):
-        hasEmpty = False
+        for x in randomTrainingData:
+            data.remove(x)
 
-        for i in x[0]:
-            if i == "":
-                hasEmpty = True
-        
-        if not hasEmpty:
-            tempArray.append(data[idx])
- 
-    return tempArray
+        testData = data
 
-def divideData(data):
-    dataLen = len((data))
-    trainingCount = int((dataLen * 0.8))
+        return randomTrainingData, testData
 
-    random.shuffle(data)
+    def getReqColsFromData(self, cols, data):
+        finalData = []
+        for x in data:
+            interData = []
 
-    randomTrainingData = random.sample(data, trainingCount)
+            for i in cols:
+                interData.append(x[0][i])
+            
+            finalData.append((interData, x[1]))
 
-    for x in randomTrainingData:
-        data.remove(x)
+        return finalData
 
-    testData = data
 
-    return randomTrainingData, testData
 
 
 
 
 
 # Actually passing data to the regression model
+dataEx = DataExtraction()
+fileData = dataEx.getDataFromCsv("Cancer_dataset.csv")
+cleanData = dataEx.cleanUpData(fileData)
+TRAINING_DATA, TEST_DATA = dataEx.divideData(cleanData)
+
 
 print("\n---------------- Question 1 -------------")
 
-tempData = getDataFromCsv("Cancer_dataset.csv")
-print(len(tempData))
-data = cleanUpData(tempData)
-print(len(data))
-trainingData, testData = divideData(data)
+trainingData = dataEx.getReqColsFromData([3] ,TRAINING_DATA)
+testData = dataEx.getReqColsFromData([3], TEST_DATA)
 
-print(len(trainingData), len(testData))
 
-# lr1 = LinearRegression(data1, 1000, [0, 0], 0.001)
-# lr1.divideData()
-# lr1.performLinearRegression()
+lr2 = LinearRegression(trainingData, testData, 1000, [0, 0], 0.001)
+lr2.performLinearRegression()
 
 # print("\n---------------- Question 2 -------------")
 
-# tempData2 = getDataFromCsv("Cancer_dataset.csv")
-# data2 = cleanUpData(tempData2)
+trainingData2 = dataEx.getReqColsFromData([3, 32] ,TRAINING_DATA)
+testData2 = dataEx.getReqColsFromData([3, 32], TEST_DATA)
 
-
-
-
-
-
-
-
-
-# lr2 = LinearRegression(data2, 1000, [0, 0, 0], 0.001)
-# lr2.divideData()
-# lr2.performLinearRegression()
+lr2 = LinearRegression(trainingData2, testData2, 1000, [0, 0, 0], 0.001)
+lr2.performLinearRegression()
 
 
 # print("\n---------------- Question 3 -------------")
