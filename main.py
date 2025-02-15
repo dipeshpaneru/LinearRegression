@@ -183,9 +183,6 @@ class DataExtraction:
 
 
 
-
-
-
 # Actually passing data to the regression model
 dataEx = DataExtraction()
 fileData = dataEx.getDataFromCsv("Cancer_dataset.csv")
@@ -211,51 +208,50 @@ lr2 = LinearRegression(trainingData2, testData2, 1000, [0, 0, 0], 0.001)
 lr2.performLinearRegression()
 
 
-# print("\n---------------- Question 3 -------------")
-# print("Step 1")
+print("\n---------------- Question 3 -------------")
+print("\nStep 1")
 # # I have chosen lymph_node_status first because in question 2
 # # adding lymph_node_status to the model seemed to better the model performance
 
-# tempData3 = getDataFromCsv("Cancer_dataset.csv", [34], 33)
-# data3 = cleanUpData(tempData3)
+trainingData3 = dataEx.getReqColsFromData([32] ,TRAINING_DATA)
+testData3 = dataEx.getReqColsFromData([32], TEST_DATA)
 
-# lr3 = LinearRegression(data3, 1000, [0, 0], 0.001)
-# lr3.divideData()
-# lr3.performLinearRegression()
+lr3 = LinearRegression(trainingData3, testData3, 1000, [0, 0], 0.001)
+lr3.performLinearRegression()
 
-# print("Step 2")
+print("\nStep 2")
 # # I have chosen mean_radius in the for second step,
 # # because radius should impact the size 
 
-# tempData3 = getDataFromCsv("Cancer_dataset.csv", [3, 34], 33)
-# data3 = cleanUpData(tempData3)
+trainingData4 = dataEx.getReqColsFromData([2, 32] ,TRAINING_DATA)
+testData4 = dataEx.getReqColsFromData([2, 32], TEST_DATA)
 
-# regressionModel = LinearRegression(data3, 1000, [0, 0, 0], 0.001)
-# regressionModel.performLinearRegression()
+lr4 = LinearRegression(trainingData4, testData4, 1000, [0, 0, 0], 0.001)
+lr4.performLinearRegression()
 
-# print("Step 3")
+print("\nStep 3")
 #  # In third step I am adding mean_smoothness because mean_radius, 
 #  # mean_parameter and mean_area seems to have some colinearity, thus I am choosing 
 #  # something that is not these two
 
-# tempData3 = getDataFromCsv("Cancer_dataset.csv", [7, 3, 34], 33)
-# data3 = cleanUpData(tempData3)
+trainingData5 = dataEx.getReqColsFromData([2, 6, 32] ,TRAINING_DATA)
+testData5 = dataEx.getReqColsFromData([2, 6, 32], TEST_DATA)
 
-# regressionModel = LinearRegression(data3, 1000, [0, 0, 0, 0], 0.001)
-# regressionModel.performLinearRegression()
+lr5 = LinearRegression(trainingData5, trainingData5, 1000, [0, 0, 0, 0], 0.001)
+lr5.performLinearRegression()
 
-# print("Step 4")
+print("\nStep 4")
 
-# tempData3 = getDataFromCsv("Cancer_dataset.csv", [7, 3, 10, 34], 33)
-# data3 = cleanUpData(tempData3)
+trainingData6 = dataEx.getReqColsFromData([2, 6, 10, 32] ,TRAINING_DATA)
+testData6 = dataEx.getReqColsFromData([2, 6, 10, 32], TEST_DATA)
 
-# regressionModel = LinearRegression(data3, 1000, [0, 0, 0, 0, 0], 0.001)
-# regressionModel.performLinearRegression()
+lr6 = LinearRegression(trainingData6, trainingData6, 1000, [0, 0, 0, 0, 0], 0.001)
+lr6.performLinearRegression()
 
-# # print("Step 5")
+print("\nStep 5")
 
-# tempData3 = getDataFromCsv("Cancer_dataset.csv", [7, 3, 10, 11, 34], 33)
-# data3 = cleanUpData(tempData3)
+trainingData7 = dataEx.getReqColsFromData([2, 6, 10, 11, 32] ,TRAINING_DATA)
+testData7 = dataEx.getReqColsFromData([2, 6, 10, 11, 32], TEST_DATA)
 
-# regressionModel = LinearRegression(data3, 1000, [0, 0, 0, 0 ,0, 0], 0.001)
-# regressionModel.performLinearRegression()
+lr7 = LinearRegression(trainingData7, testData7, 1000, [0, 0, 0, 0, 0, 0], 0.001)
+lr7.performLinearRegression()
