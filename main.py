@@ -223,8 +223,8 @@ print("\nStep 2")
 # # I have chosen mean_radius in the for second step,
 # # because radius should impact the size 
 
-trainingData4 = dataEx.getReqColsFromData([2, 32] ,TRAINING_DATA)
-testData4 = dataEx.getReqColsFromData([2, 32], TEST_DATA)
+trainingData4 = dataEx.getReqColsFromData([32, 6] ,TRAINING_DATA)
+testData4 = dataEx.getReqColsFromData([32, 6], TEST_DATA)
 
 lr4 = LinearRegression(trainingData4, testData4, 1000, [0, 0, 0], 0.001)
 lr4.performLinearRegression()
@@ -242,16 +242,32 @@ lr5.performLinearRegression()
 
 print("\nStep 4")
 
-trainingData6 = dataEx.getReqColsFromData([2, 6, 10, 32] ,TRAINING_DATA)
-testData6 = dataEx.getReqColsFromData([2, 6, 10, 32], TEST_DATA)
+trainingData6 = dataEx.getReqColsFromData([2, 6, 22, 32] ,TRAINING_DATA)
+testData6 = dataEx.getReqColsFromData([2, 6, 22, 32], TEST_DATA)
 
 lr6 = LinearRegression(trainingData6, trainingData6, 1000, [0, 0, 0, 0, 0], 0.001)
 lr6.performLinearRegression()
 
 print("\nStep 5")
 
-trainingData7 = dataEx.getReqColsFromData([2, 6, 10, 11, 32] ,TRAINING_DATA)
-testData7 = dataEx.getReqColsFromData([2, 6, 10, 11, 32], TEST_DATA)
+trainingData7 = dataEx.getReqColsFromData([2, 6, 22, 32, 11] ,TRAINING_DATA)
+testData7 = dataEx.getReqColsFromData([2, 6, 22, 32, 11], TEST_DATA)
 
 lr7 = LinearRegression(trainingData7, testData7, 1000, [0, 0, 0, 0, 0, 0], 0.001)
 lr7.performLinearRegression()
+
+# print("\nStep 6")
+
+# trainingData8 = dataEx.getReqColsFromData([2, 22, 30, 32, 11, 6] ,TRAINING_DATA)
+# testData8 = dataEx.getReqColsFromData([2, 22, 30, 32, 11, 6], TEST_DATA)
+
+# lr8 = LinearRegression(trainingData8, testData8, 1000, [0, 0, 0, 0, 0, 0, 0], 0.001)
+# lr8.performLinearRegression()
+
+# print("\nStep 7")
+
+# trainingData8 = dataEx.getReqColsFromData([2, 5, 30, 32, 11, 6, 22] ,TRAINING_DATA)
+# testData8 = dataEx.getReqColsFromData([2, 5, 30, 32, 11, 6, 22], TEST_DATA)
+
+# lr8 = LinearRegression(trainingData8, testData8, 1000, [0, 0, 0, 0, 0, 0, 0, 0], 0.001)
+# lr8.performLinearRegression()
