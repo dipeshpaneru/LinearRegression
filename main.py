@@ -213,8 +213,8 @@ print("\nStep 1")
 # # I have chosen lymph_node_status first because in question 2
 # # adding lymph_node_status to the model seemed to better the model performance
 
-trainingData3 = dataEx.getReqColsFromData([32] ,TRAINING_DATA)
-testData3 = dataEx.getReqColsFromData([32], TEST_DATA)
+trainingData3 = dataEx.getReqColsFromData([10] ,TRAINING_DATA)
+testData3 = dataEx.getReqColsFromData([10], TEST_DATA)
 
 lr3 = LinearRegression(trainingData3, testData3, 1000, [0, 0], 0.001)
 lr3.performLinearRegression()
@@ -223,8 +223,8 @@ print("\nStep 2")
 # # I have chosen mean_radius in the for second step,
 # # because radius should impact the size 
 
-trainingData4 = dataEx.getReqColsFromData([32, 6] ,TRAINING_DATA)
-testData4 = dataEx.getReqColsFromData([32, 6], TEST_DATA)
+trainingData4 = dataEx.getReqColsFromData([32, 10] ,TRAINING_DATA)
+testData4 = dataEx.getReqColsFromData([32, 10], TEST_DATA)
 
 lr4 = LinearRegression(trainingData4, testData4, 1000, [0, 0, 0], 0.001)
 lr4.performLinearRegression()
@@ -234,24 +234,24 @@ print("\nStep 3")
 #  # mean_parameter and mean_area seems to have some colinearity, thus I am choosing 
 #  # something that is not these two
 
-trainingData5 = dataEx.getReqColsFromData([2, 6, 32] ,TRAINING_DATA)
-testData5 = dataEx.getReqColsFromData([2, 6, 32], TEST_DATA)
+trainingData5 = dataEx.getReqColsFromData([2, 10, 32] ,TRAINING_DATA)
+testData5 = dataEx.getReqColsFromData([2, 10, 32], TEST_DATA)
 
 lr5 = LinearRegression(trainingData5, trainingData5, 1000, [0, 0, 0, 0], 0.001)
 lr5.performLinearRegression()
 
 print("\nStep 4")
 
-trainingData6 = dataEx.getReqColsFromData([2, 6, 22, 32] ,TRAINING_DATA)
-testData6 = dataEx.getReqColsFromData([2, 6, 22, 32], TEST_DATA)
+trainingData6 = dataEx.getReqColsFromData([2, 6, 10, 32] ,TRAINING_DATA)
+testData6 = dataEx.getReqColsFromData([2, 6, 10, 32], TEST_DATA)
 
 lr6 = LinearRegression(trainingData6, trainingData6, 1000, [0, 0, 0, 0, 0], 0.001)
 lr6.performLinearRegression()
 
 print("\nStep 5")
 
-trainingData7 = dataEx.getReqColsFromData([2, 6, 22, 32, 11] ,TRAINING_DATA)
-testData7 = dataEx.getReqColsFromData([2, 6, 22, 32, 11], TEST_DATA)
+trainingData7 = dataEx.getReqColsFromData([2, 6, 10, 32, 11] ,TRAINING_DATA)
+testData7 = dataEx.getReqColsFromData([2, 6, 10, 32, 11], TEST_DATA)
 
 lr7 = LinearRegression(trainingData7, testData7, 1000, [0, 0, 0, 0, 0, 0], 0.001)
 lr7.performLinearRegression()
