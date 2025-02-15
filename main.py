@@ -197,78 +197,109 @@ trainingData = dataEx.getReqColsFromData([3] ,TRAINING_DATA)
 testData = dataEx.getReqColsFromData([3], TEST_DATA)
 
 
-lr2 = LinearRegression(trainingData, testData, 1000, [0, 0], Decimal("0.001"))
+lr2 = LinearRegression(trainingData, testData, 50, [0, 0], 0.001)
 lr2.performLinearRegression()
 
-# print("\n---------------- Question 2 -------------")
+print("\n---------------- Question 2 -------------")
 
-# trainingData2 = dataEx.getReqColsFromData([3, 32] ,TRAINING_DATA)
-# testData2 = dataEx.getReqColsFromData([3, 32], TEST_DATA)
+trainingData2 = dataEx.getReqColsFromData([3, 32] ,TRAINING_DATA)
+testData2 = dataEx.getReqColsFromData([3, 32], TEST_DATA)
 
-# lr2 = LinearRegression(trainingData2, testData2, 1000, [0, 0, 0], 0.001)
-# lr2.performLinearRegression()
+lr2 = LinearRegression(trainingData2, testData2, 50, [0, 0, 0], 0.001)
+lr2.performLinearRegression()
 
 
-# print("\n---------------- Question 3 -------------")
-# print("\nStep 1")
-# # # I have chosen lymph_node_status first because in question 2
-# # # adding lymph_node_status to the model seemed to better the model performance
+print("\n---------------- Question 3a -------------")
+print("\nStep 1")
+# # I have chosen lymph_node_status first because in question 2
+# # adding lymph_node_status to the model seemed to better the model performance
 
-# trainingData3 = dataEx.getReqColsFromData([10] ,TRAINING_DATA)
-# testData3 = dataEx.getReqColsFromData([10], TEST_DATA)
+trainingData3 = dataEx.getReqColsFromData([10] ,TRAINING_DATA)
+testData3 = dataEx.getReqColsFromData([10], TEST_DATA)
 
-# lr3 = LinearRegression(trainingData3, testData3, 1000, [0, 0], 0.001)
-# lr3.performLinearRegression()
+lr3 = LinearRegression(trainingData3, testData3, 50, [0, 0], 0.001)
+lr3.performLinearRegression()
 
-# print("\nStep 2")
-# # # I have chosen mean_radius in the for second step,
-# # # because radius should impact the size 
+print("\nStep 2")
+# # I have chosen mean_radius in the for second step,
+# # because radius should impact the size 
 
-# trainingData4 = dataEx.getReqColsFromData([32, 10] ,TRAINING_DATA)
-# testData4 = dataEx.getReqColsFromData([32, 10], TEST_DATA)
+trainingData4 = dataEx.getReqColsFromData([32, 10] ,TRAINING_DATA)
+testData4 = dataEx.getReqColsFromData([32, 10], TEST_DATA)
 
-# lr4 = LinearRegression(trainingData4, testData4, 1000, [0, 0, 0], 0.001)
-# lr4.performLinearRegression()
+lr4 = LinearRegression(trainingData4, testData4, 50, [0, 0, 0], 0.001)
+lr4.performLinearRegression()
 
-# print("\nStep 3")
-# #  # In third step I am adding mean_smoothness because mean_radius, 
-# #  # mean_parameter and mean_area seems to have some colinearity, thus I am choosing 
-# #  # something that is not these two
+print("\nStep 3")
+#  # In third step I am adding mean_smoothness because mean_radius, 
+#  # mean_parameter and mean_area seems to have some colinearity, thus I am choosing 
+#  # something that is not these two
 
-# trainingData5 = dataEx.getReqColsFromData([2, 10, 32] ,TRAINING_DATA)
-# testData5 = dataEx.getReqColsFromData([2, 10, 32], TEST_DATA)
+trainingData5 = dataEx.getReqColsFromData([2, 10, 32] ,TRAINING_DATA)
+testData5 = dataEx.getReqColsFromData([2, 10, 32], TEST_DATA)
 
-# lr5 = LinearRegression(trainingData5, trainingData5, 1000, [0, 0, 0, 0], 0.001)
-# lr5.performLinearRegression()
+lr5 = LinearRegression(trainingData5, trainingData5, 50, [0, 0, 0, 0], 0.001)
+lr5.performLinearRegression()
 
-# print("\nStep 4")
+print("\nStep 4")
 
-# trainingData6 = dataEx.getReqColsFromData([2, 6, 10, 32] ,TRAINING_DATA)
-# testData6 = dataEx.getReqColsFromData([2, 6, 10, 32], TEST_DATA)
+trainingData6 = dataEx.getReqColsFromData([2, 6, 10, 32] ,TRAINING_DATA)
+testData6 = dataEx.getReqColsFromData([2, 6, 10, 32], TEST_DATA)
 
-# lr6 = LinearRegression(trainingData6, trainingData6, 1000, [0, 0, 0, 0, 0], 0.001)
-# lr6.performLinearRegression()
+lr6 = LinearRegression(trainingData6, trainingData6, 50, [0, 0, 0, 0, 0], 0.001)
+lr6.performLinearRegression()
 
-# print("\nStep 5")
+print("\nStep 5")
 
-# trainingData7 = dataEx.getReqColsFromData([2, 6, 10, 32, 11] ,TRAINING_DATA)
-# testData7 = dataEx.getReqColsFromData([2, 6, 10, 32, 11], TEST_DATA)
+trainingData7 = dataEx.getReqColsFromData([2, 6, 10, 32, 11] ,TRAINING_DATA)
+testData7 = dataEx.getReqColsFromData([2, 6, 10, 32, 11], TEST_DATA)
 
-# lr7 = LinearRegression(trainingData7, testData7, 1000, [0, 0, 0, 0, 0, 0], 0.001)
-# lr7.performLinearRegression()
+lr7 = LinearRegression(trainingData7, testData7, 50, [0, 0, 0, 0, 0, 0], 0.001)
+lr7.performLinearRegression()
 
-# print("\nStep 6")
 
-# trainingData8 = dataEx.getReqColsFromData([2, 22, 30, 32, 11, 6] ,TRAINING_DATA)
-# testData8 = dataEx.getReqColsFromData([2, 22, 30, 32, 11, 6], TEST_DATA)
 
-# lr8 = LinearRegression(trainingData8, testData8, 1000, [0, 0, 0, 0, 0, 0, 0], 0.001)
-# lr8.performLinearRegression()
+print("\n---------------- Question 3b -------------")
 
-# print("\nStep 7")
+print("\nStep 1")
 
-# trainingData8 = dataEx.getReqColsFromData([2, 5, 30, 32, 11, 6, 22] ,TRAINING_DATA)
-# testData8 = dataEx.getReqColsFromData([2, 5, 30, 32, 11, 6, 22], TEST_DATA)
+trainingData8 = dataEx.getReqColsFromData([2, 4, 5, 6, 10, 11, 22, 25, 30, 32] ,TRAINING_DATA)
+testData8 = dataEx.getReqColsFromData([2, 4, 5, 6, 10, 11, 22, 25, 30, 32], TEST_DATA)
 
-# lr8 = LinearRegression(trainingData8, testData8, 1000, [0, 0, 0, 0, 0, 0, 0, 0], 0.001)
-# lr8.performLinearRegression()
+lr8 = LinearRegression(trainingData8, testData8, 50, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0.001)
+lr8.performLinearRegression()
+
+print("\nStep 2")
+# we can see that the value that we got is very large so I will replace one by one 
+# each value that is resulting such a huge number
+# we have removed worst_area column in this iteration
+
+trainingData9 = dataEx.getReqColsFromData([2, 4, 5, 6, 10, 11, 22, 30, 32] ,TRAINING_DATA)
+testData9 = dataEx.getReqColsFromData([2, 4, 5, 6, 10, 11, 22, 30, 32], TEST_DATA)
+
+lr9 = LinearRegression(trainingData9, testData9, 50, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0.001)
+lr9.performLinearRegression()
+
+print("\nStep 3")
+
+trainingData10 = dataEx.getReqColsFromData([2, 4, 6, 10, 11, 22, 30, 32] ,TRAINING_DATA)
+testData10 = dataEx.getReqColsFromData([2, 4, 5, 10, 11, 22, 30, 32], TEST_DATA)
+
+lr10 = LinearRegression(trainingData10, testData10, 50, [0, 0, 0, 0, 0, 0, 0, 0, 0], 0.001)
+lr10.performLinearRegression()
+
+print("\nStep 4")
+
+trainingData11 = dataEx.getReqColsFromData([2, 6, 10, 11, 22, 30, 32] ,TRAINING_DATA)
+testData11 = dataEx.getReqColsFromData([2, 5, 10, 11, 22, 30, 32], TEST_DATA)
+
+lr11 = LinearRegression(trainingData11, testData11, 50, [0, 0, 0, 0, 0, 0, 0, 0], 0.001)
+lr11.performLinearRegression()
+
+print("\nStep 5")
+
+trainingData12 = dataEx.getReqColsFromData([2, 6, 10, 11, 22, 32] ,TRAINING_DATA)
+testData12 = dataEx.getReqColsFromData([2, 5, 10, 11, 22, 32], TEST_DATA)
+
+lr12 = LinearRegression(trainingData12, testData12, 50, [0, 0, 0, 0, 0, 0, 0], 0.001)
+lr12.performLinearRegression()
