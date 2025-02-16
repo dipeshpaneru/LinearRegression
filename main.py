@@ -258,6 +258,8 @@ lr2.performLinearRegression()
 print("\n---------------- Question 3A -------------")
 print("\nStep 1")
 
+# Starting with mean_symmetry, chose it as a random parameter
+
 trainingData3 = dataEx.getReqColsFromData(["mean_symmetry"] ,TRAINING_DATA)
 testData3 = dataEx.getReqColsFromData(["mean_symmetry"], TEST_DATA)
 
@@ -265,6 +267,8 @@ lr3 = LinearRegression(trainingData3, testData3, 50, [0, 0], 0.001)
 lr3.performLinearRegression()
 
 print("\nStep 2")
+
+# Adding lymph_node_status because it seemed to reduce overall cost in previous question
 
 trainingData4 = dataEx.getReqColsFromData(["mean_symmetry", 'lymph_node_status'] ,TRAINING_DATA)
 testData4 = dataEx.getReqColsFromData(["mean_symmetry", 'lymph_node_status'], TEST_DATA)
@@ -274,6 +278,8 @@ lr4.performLinearRegression()
 
 print("\nStep 3")
 
+# Adding mean_radius because it had a very low cost when model was built using it.
+
 trainingData5 = dataEx.getReqColsFromData(["mean_radius", "mean_symmetry", 'lymph_node_status'] ,TRAINING_DATA)
 testData5 = dataEx.getReqColsFromData(["mean_radius", "mean_symmetry", 'lymph_node_status'], TEST_DATA)
 
@@ -282,6 +288,8 @@ lr5.performLinearRegression()
 
 print("\nStep 4")
 
+# Adding mean_smoothness as it does not increase cost.
+
 trainingData6 = dataEx.getReqColsFromData(["mean_radius", "mean_symmetry", 'mean_smoothness', 'lymph_node_status'] ,TRAINING_DATA)
 testData6 = dataEx.getReqColsFromData(["mean_radius", "mean_symmetry", 'mean_smoothness', 'lymph_node_status'], TEST_DATA)
 
@@ -289,6 +297,8 @@ lr6 = LinearRegression(trainingData6, trainingData6, 50, [0, 0, 0, 0, 0], 0.001)
 lr6.performLinearRegression()
 
 print("\nStep 5")
+
+# Adding mean_fractal_dimension as it does not increase cost.
 
 trainingData7 = dataEx.getReqColsFromData(["mean_radius",
                                             "mean_symmetry", 
@@ -309,6 +319,9 @@ lr7.performLinearRegression()
 print("\n---------------- Question 3B -------------")
 
 print("\nStep 1")
+
+# Using all 10 parameters, we see that cost is extremely large, some features being used is not
+# usable without scaling or some sort of data manipulation.
 
 trainingData8 = dataEx.getReqColsFromData(['mean_radius',
                                             "mean_perimeter",
@@ -336,7 +349,7 @@ lr8 = LinearRegression(trainingData8, testData8, 50, [0, 0, 0, 0, 0, 0, 0, 0, 0,
 lr8.performLinearRegression()
 
 print("\nStep 2")
-# we can see that the value that we got is very large so I will replace one by one 
+# We can see that the value that we got is very large so I will replace one by one 
 # each value that is resulting such a huge number
 # we have removed worst_area column in this iteration
 
@@ -364,6 +377,9 @@ lr9.performLinearRegression()
 
 print("\nStep 3")
 
+# Using same logic as before iteration I am removing mean_perimeter which is causing
+# large cost
+
 trainingData10 = dataEx.getReqColsFromData(['mean_radius',
                                             "mean_area", 
                                             'mean_smoothness',
@@ -387,6 +403,9 @@ lr10.performLinearRegression()
 
 print("\nStep 4")
 
+# Using same logic as before iteration I am removing mean_area which is causing
+# large cost
+
 trainingData11 = dataEx.getReqColsFromData(['mean_radius',
                                             "mean_symmetry", 
                                              "mean_smoothness",
@@ -406,6 +425,8 @@ lr11 = LinearRegression(trainingData11, testData11, 50, [0, 0, 0, 0, 0, 0, 0, 0]
 lr11.performLinearRegression()
 
 print("\nStep 5")
+
+# Removing worst_symmetry in this iteration
 
 trainingData12 = dataEx.getReqColsFromData(['mean_radius',
                                             "mean_smoothness",
@@ -427,8 +448,8 @@ lr12.performLinearRegression()
 print("\n-------------Question 4---------")
 print("------------------4B ---------")
 
-# Performing Min Max scaling on the model received from stepwise backward regression
-# because it performed the best amongst the models that we have.
+# Performing Min Max scaling on the model we received from Backward Stepwise regression,
+# because it performed the best out of the previous ones
 
 tempTrainingData = dataEx.performMinMaxScaling(['mean_radius', 
                                         "mean_smoothness",
