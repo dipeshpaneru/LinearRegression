@@ -258,32 +258,32 @@ lr2.performLinearRegression()
 print("\n---------------- Question 3A -------------")
 print("\nStep 1")
 
-# Starting with mean_symmetry, chose it as a random parameter
+# Adding lymph_node_status because it seemed to reduce overall cost in previous question
 
-trainingData3 = dataEx.getReqColsFromData(["mean_symmetry"] ,TRAINING_DATA)
-testData3 = dataEx.getReqColsFromData(["mean_symmetry"], TEST_DATA)
+trainingData3 = dataEx.getReqColsFromData(["lymph_node_status"] ,TRAINING_DATA)
+testData3 = dataEx.getReqColsFromData(["lymph_node_status"], TEST_DATA)
 
 lr3 = LinearRegression(trainingData3, testData3, 50, [0, 0], 0.001)
 lr3.performLinearRegression()
 
 print("\nStep 2")
 
-# Adding lymph_node_status because it seemed to reduce overall cost in previous question
+# Adding mean_radius because if performs better than rest of the predictors in the set
 
-trainingData4 = dataEx.getReqColsFromData(["mean_symmetry", 'lymph_node_status'] ,TRAINING_DATA)
-testData4 = dataEx.getReqColsFromData(["mean_symmetry", 'lymph_node_status'], TEST_DATA)
+trainingData4 = dataEx.getReqColsFromData(["mean_radius", 'lymph_node_status'] ,TRAINING_DATA)
+testData4 = dataEx.getReqColsFromData(["mean_radius", 'lymph_node_status'], TEST_DATA)
 
 lr4 = LinearRegression(trainingData4, testData4, 50, [0, 0, 0], 0.001)
 lr4.performLinearRegression()
 
 print("\nStep 3")
 
-# Adding mean_radius because it had a very low cost when model was built using it.
+# Adding mean_semmetry because it had a very low cost when model was built using it.
 
 trainingData5 = dataEx.getReqColsFromData(["mean_radius", "mean_symmetry", 'lymph_node_status'] ,TRAINING_DATA)
 testData5 = dataEx.getReqColsFromData(["mean_radius", "mean_symmetry", 'lymph_node_status'], TEST_DATA)
 
-lr5 = LinearRegression(trainingData5, trainingData5, 50, [0, 0, 0, 0], 0.001)
+lr5 = LinearRegression(trainingData5, testData5, 50, [0, 0, 0, 0], 0.001)
 lr5.performLinearRegression()
 
 print("\nStep 4")
@@ -293,7 +293,7 @@ print("\nStep 4")
 trainingData6 = dataEx.getReqColsFromData(["mean_radius", "mean_symmetry", 'mean_smoothness', 'lymph_node_status'] ,TRAINING_DATA)
 testData6 = dataEx.getReqColsFromData(["mean_radius", "mean_symmetry", 'mean_smoothness', 'lymph_node_status'], TEST_DATA)
 
-lr6 = LinearRegression(trainingData6, trainingData6, 50, [0, 0, 0, 0, 0], 0.001)
+lr6 = LinearRegression(trainingData6, testData6, 50, [0, 0, 0, 0, 0], 0.001)
 lr6.performLinearRegression()
 
 print("\nStep 5")
