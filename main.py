@@ -58,7 +58,7 @@ class LinearRegression:
     
     def calculateCost(self, predictedOutputs, data):
         outputs = self.getOutputs(data)
-        featureLen = len(self.getFeatures2D(data))
+        dataLen = len(self.getFeatures2D(data))
 
         total = 0
 
@@ -66,7 +66,7 @@ class LinearRegression:
             result = (x - outputs[idx]) ** 2
             total += result
 
-        cost = total / Decimal((2 * featureLen))
+        cost = total / Decimal((2 * dataLen))
         return cost
     
 
@@ -74,7 +74,7 @@ class LinearRegression:
         features = self.getFeatures2D(self.trainingData)
         outputs = self.getOutputs(self.trainingData)
 
-        featureLen = Decimal(len(features))
+        dataLen = Decimal(len(features))
         
         total = 0
 
@@ -85,14 +85,13 @@ class LinearRegression:
             else:
                 result = (predictedOutputs[idx] - outputs[idx]) * Decimal(x[index]) 
 
-                if self.isRegularization:
-
-                    result += (1000 * B) / featureLen # regularization coefficent = 1000
-
 
             total += result
+
+        if self.isRegularization and (not isIntercept):
+            total += (100 * B) / dataLen # regularization coefficent = 100
         
-        change = (Decimal(self.lr) * total) / featureLen
+        change = (Decimal(self.lr) * total) / dataLen
 
         newB = B - change
 
