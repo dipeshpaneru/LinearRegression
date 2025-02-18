@@ -21,12 +21,13 @@ class LinearRegression:
     trainingData = None
     testData = None
 
-    def __init__(self, trainingData, testData, maxNoOfIterations, thetas, lr):
+    def __init__(self, trainingData, testData, maxNoOfIterations, thetas, lr, isRegularization):
         self.trainingData = trainingData
         self.testData = testData
         self.maxNoOfIterations = maxNoOfIterations
         self.thetas = thetas
         self.lr = lr
+        self.isRegularization = isRegularization
         
         
     def getFeatures2D(self, data):
@@ -82,13 +83,20 @@ class LinearRegression:
             if isIntercept:
                 result = (predictedOutputs[idx] - outputs[idx])
             else:
-                result = (predictedOutputs[idx] - outputs[idx]) * Decimal(x[index])
+                result = (predictedOutputs[idx] - outputs[idx]) * Decimal(x[index]) 
+
+                if self.isRegularization:
+
+                    result += (1000 * B) / featureLen # regularization coefficent = 1000
+
 
             total += result
         
         change = (Decimal(self.lr) * total) / featureLen
 
         newB = B - change
+
+        
         return newB
     
     def iterate(self):
@@ -242,16 +250,16 @@ trainingData = dataEx.getReqColsFromData(['mean_texture'] ,TRAINING_DATA)
 testData = dataEx.getReqColsFromData(['mean_texture'], TEST_DATA)
 
 
-lr2 = LinearRegression(trainingData, testData, 50, [0, 0], 0.001) # passing in Training data, Test data, max no of iteration, starting theta values,
-                                                                  # and the learning date
-lr2.performLinearRegression()
+lr1 = LinearRegression(trainingData, testData, 50, [0, 0], 0.001, False) # passing in Training data, Test data, max no of iteration, starting theta values,
+                                                                  # the learning date and regularization
+lr1.performLinearRegression()
 
 print("\n---------------- Question 2 -------------")
 
 trainingData2 = dataEx.getReqColsFromData(['mean_texture', 'lymph_node_status'] ,TRAINING_DATA)
 testData2 = dataEx.getReqColsFromData(['mean_texture', 'lymph_node_status'], TEST_DATA)
 
-lr2 = LinearRegression(trainingData2, testData2, 50, [0, 0, 0], 0.001)
+lr2 = LinearRegression(trainingData2, testData2, 50, [0, 0, 0], 0.001, False)
 lr2.performLinearRegression()
 
 
@@ -263,7 +271,7 @@ print("\nStep 1")
 trainingData3 = dataEx.getReqColsFromData(["lymph_node_status"] ,TRAINING_DATA)
 testData3 = dataEx.getReqColsFromData(["lymph_node_status"], TEST_DATA)
 
-lr3 = LinearRegression(trainingData3, testData3, 50, [0, 0], 0.001)
+lr3 = LinearRegression(trainingData3, testData3, 50, [0, 0], 0.001, False)
 lr3.performLinearRegression()
 
 print("\nStep 2")
@@ -273,7 +281,7 @@ print("\nStep 2")
 trainingData4 = dataEx.getReqColsFromData(["mean_radius", 'lymph_node_status'] ,TRAINING_DATA)
 testData4 = dataEx.getReqColsFromData(["mean_radius", 'lymph_node_status'], TEST_DATA)
 
-lr4 = LinearRegression(trainingData4, testData4, 50, [0, 0, 0], 0.001)
+lr4 = LinearRegression(trainingData4, testData4, 50, [0, 0, 0], 0.0011, False)
 lr4.performLinearRegression()
 
 print("\nStep 3")
@@ -283,7 +291,7 @@ print("\nStep 3")
 trainingData5 = dataEx.getReqColsFromData(["mean_radius", "mean_symmetry", 'lymph_node_status'] ,TRAINING_DATA)
 testData5 = dataEx.getReqColsFromData(["mean_radius", "mean_symmetry", 'lymph_node_status'], TEST_DATA)
 
-lr5 = LinearRegression(trainingData5, testData5, 50, [0, 0, 0, 0], 0.001)
+lr5 = LinearRegression(trainingData5, testData5, 50, [0, 0, 0, 0], 0.0011, False)
 lr5.performLinearRegression()
 
 print("\nStep 4")
@@ -293,7 +301,7 @@ print("\nStep 4")
 trainingData6 = dataEx.getReqColsFromData(["mean_radius", "mean_symmetry", 'mean_smoothness', 'lymph_node_status'] ,TRAINING_DATA)
 testData6 = dataEx.getReqColsFromData(["mean_radius", "mean_symmetry", 'mean_smoothness', 'lymph_node_status'], TEST_DATA)
 
-lr6 = LinearRegression(trainingData6, testData6, 50, [0, 0, 0, 0, 0], 0.001)
+lr6 = LinearRegression(trainingData6, testData6, 50, [0, 0, 0, 0, 0], 0.0011, False)
 lr6.performLinearRegression()
 
 print("\nStep 5")
@@ -311,7 +319,7 @@ testData7 = dataEx.getReqColsFromData(["mean_radius",
                                        'lymph_node_status', 
                                        'mean_fractal_dimension'], TEST_DATA)
 
-lr7 = LinearRegression(trainingData7, testData7, 50, [0, 0, 0, 0, 0, 0], 0.001)
+lr7 = LinearRegression(trainingData7, testData7, 50, [0, 0, 0, 0, 0, 0], 0.0011, False)
 lr7.performLinearRegression()
 
 
@@ -345,7 +353,7 @@ testData8 = dataEx.getReqColsFromData(['mean_radius',
                                             "worst_symmetry",
                                             "lymph_node_status"], TEST_DATA)
 
-lr8 = LinearRegression(trainingData8, testData8, 50, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0.001)
+lr8 = LinearRegression(trainingData8, testData8, 50, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0.0011, False)
 lr8.performLinearRegression()
 
 print("\nStep 2")
@@ -372,7 +380,7 @@ testData9 = dataEx.getReqColsFromData(['mean_radius',
                                             "worst_symmetry",
                                             "lymph_node_status"], TEST_DATA)
 
-lr9 = LinearRegression(trainingData9, testData9, 50, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0.001)
+lr9 = LinearRegression(trainingData9, testData9, 50, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0.0011, False)
 lr9.performLinearRegression()
 
 print("\nStep 3")
@@ -398,7 +406,7 @@ testData10 = dataEx.getReqColsFromData(['mean_radius',
                                             "worst_symmetry",
                                             "lymph_node_status"], TEST_DATA)
 
-lr10 = LinearRegression(trainingData10, testData10, 50, [0, 0, 0, 0, 0, 0, 0, 0, 0], 0.001)
+lr10 = LinearRegression(trainingData10, testData10, 50, [0, 0, 0, 0, 0, 0, 0, 0, 0], 0.0011, False)
 lr10.performLinearRegression()
 
 print("\nStep 4")
@@ -421,7 +429,7 @@ testData11 = dataEx.getReqColsFromData(['mean_radius',
                                             "worst_symmetry",
                                             "lymph_node_status"], TEST_DATA)
 
-lr11 = LinearRegression(trainingData11, testData11, 50, [0, 0, 0, 0, 0, 0, 0, 0], 0.001)
+lr11 = LinearRegression(trainingData11, testData11, 50, [0, 0, 0, 0, 0, 0, 0, 0], 0.0011, False)
 lr11.performLinearRegression()
 
 print("\nStep 5")
@@ -441,11 +449,31 @@ testData12 = dataEx.getReqColsFromData(['mean_radius',
                                         "worst_radius",
                                         "lymph_node_status"], TEST_DATA)
 
-lr12 = LinearRegression(trainingData12, testData12, 50, [0, 0, 0, 0, 0, 0, 0], 0.001)
+lr12 = LinearRegression(trainingData12, testData12, 50, [0, 0, 0, 0, 0, 0, 0], 0.0011, False)
 lr12.performLinearRegression()  
 
 
 print("\n-------------Question 4---------")
+print("------------------4A ---------")
+# In this we pass regularization as true
+
+trainingData13 = dataEx.getReqColsFromData(['mean_radius',
+                                            "mean_smoothness",
+                                            "mean_symmetry", 
+                                            "mean_fractal_dimension", 
+                                            "worst_radius",
+                                            "lymph_node_status"] ,TRAINING_DATA)
+testData13 = dataEx.getReqColsFromData(['mean_radius', 
+                                        "mean_smoothness",
+                                        "mean_symmetry", 
+                                        "mean_fractal_dimension", 
+                                        "worst_radius",
+                                        "lymph_node_status"], TEST_DATA)
+
+lr13 = LinearRegression(trainingData13, testData13, 50, [0, 0, 0, 0, 0, 0, 0], 0.0011, True)
+lr13.performLinearRegression() 
+
+
 print("------------------4B ---------")
 
 # Performing Min Max scaling on the model we received from Backward Stepwise regression,
@@ -464,13 +492,13 @@ tempTestData = dataEx.performMinMaxScaling(['mean_radius',
                                         "worst_radius",
                                         "lymph_node_status"] ,TEST_DATA)
 
-trainingData13 = dataEx.getReqColsFromData(['mean_radius', 
+trainingData14 = dataEx.getReqColsFromData(['mean_radius', 
                                         "mean_smoothness",
                                         "mean_symmetry", 
                                         "mean_fractal_dimension", 
                                         "worst_radius",
                                         "lymph_node_status"] ,tempTrainingData)
-testData13 = dataEx.getReqColsFromData(['mean_radius', 
+testData14 = dataEx.getReqColsFromData(['mean_radius', 
                                         "mean_smoothness",
                                         "mean_symmetry", 
                                         "mean_fractal_dimension", 
@@ -478,5 +506,5 @@ testData13 = dataEx.getReqColsFromData(['mean_radius',
                                         "lymph_node_status"], tempTestData)
 
 
-lr13 = LinearRegression(trainingData13, testData13, 50, [0, 0, 0, 0, 0, 0, 0], 0.001)
-lr13.performLinearRegression()
+lr14 = LinearRegression(trainingData14, testData14, 50, [0, 0, 0, 0, 0, 0, 0], 0.001, False)
+lr14.performLinearRegression()
